@@ -1,0 +1,68 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <UserSecretsId>aspnet-Teamwork_Hackathon-1A906DEE-0274-4C05-BC87-34655E68F83C</UserSecretsId>
+    <PackageId>teamworkhackathon</PackageId>
+    <TypeScriptToolsVersion>2.3</TypeScriptToolsVersion>
+    <AssemblyName>TeamworkHackathon</AssemblyName>
+    <StartupObject>Teamwork_Hackathon.Program</StartupObject>
+    <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
+    <ApplicationInsightsResourceId>/subscriptions/163bff58-4916-4290-b655-2f055a284f14/resourcegroups/Default-ApplicationInsights-EastUS/providers/microsoft.insights/components/Teamwork Hackathon</ApplicationInsightsResourceId>
+    <ApplicationInsightsAnnotationResourceId>/subscriptions/163bff58-4916-4290-b655-2f055a284f14/resourcegroups/Default-ApplicationInsights-EastUS/providers/microsoft.insights/components/Teamwork Hackathon</ApplicationInsightsAnnotationResourceId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Areas\**" />
+    <Compile Remove="ClientApp\assets\**" />
+    <Content Remove="Areas\**" />
+    <Content Remove="ClientApp\assets\**" />
+    <EmbeddedResource Remove="Areas\**" />
+    <EmbeddedResource Remove="ClientApp\assets\**" />
+    <None Remove="Areas\**" />
+    <None Remove="ClientApp\assets\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\UsersController.cs" />
+    <Compile Include="Areas\Admin\Models\UserListDTO.cs" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.0" PrivateAssets="All" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.1.2" />
+    <PackageReference Include="vue" Version="2.5.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.0" />
+    <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="2.0.0" />
+    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Areas\Admin\Views\Config\Index.cshtml" />
+    <None Include="Areas\Admin\Views\Users\Create.cshtml" />
+    <None Include="Areas\Admin\Views\Users\Delete.cshtml" />
+    <None Include="Areas\Admin\Views\Users\Details.cshtml" />
+    <None Include="Areas\Admin\Views\Users\Edit.cshtml" />
+    <None Include="Areas\Admin\Views\Users\Index.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="Authorization\" />
+  </ItemGroup>
+
+
+</Project>

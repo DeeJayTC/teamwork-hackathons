@@ -1,0 +1,34 @@
+@model Teamwork_Hackathon.Models.HackathonTeamOfferings
+
+<div class="col-md-9 twibox col-lg-offset-2 modal-content">
+    <div class="modal-header">
+        <div class="col-lg-11">
+            <h3>Update Team Offering</h3>
+        </div>
+        <div class="col-lg-1">
+            <a href="#" id="btnClose" class="btnClose">X</a>
+        </div>
+
+    </div>
+    <div class="col-md-9 col-lg-offset-2" style="margin-top:15px;">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" value="@ViewBag.TeamId" name="TeamId" />
+
+            <div class="form-group">
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Text" class="control-label"></label>
+                <input asp-for="Text" class="form-control" />
+                <span asp-validation-for="Text" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>

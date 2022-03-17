@@ -1,0 +1,86 @@
+@model Teamwork_Hackathon.Models.DTO.HackathonTeamDto
+@{
+    Layout = null;
+}
+<div class="col-md-9 twibox col-lg-offset-2 modal-content">
+    <div class="modal-header">
+        <div class="col-lg-11">
+            <h4>Team: @Html.DisplayFor(modelItem => Model.Team.TeamName)</h4>
+        </div>
+        <div class="col-lg-1">
+            <a href="javascript();" id="btnClose" onclick="$('#myModal').modal('hide'); return false;" class="btnClose">X</a>
+        </div>
+    </div>
+    <div class="modal-body">
+        <div class="col-lg-12" style="margin-top:15px;">
+            <div class="row">
+                <div class="col-lg-1">
+                    <img src="@Model.Team.Logo" style="max-height:80px;max-width:80px;" />
+                </div>
+                <div class="col-lg-11" style="padding-left:35px;">
+                    @Model.Team.TeamDescription
+                </div>
+            </div>
+            <hr />
+            <div class="row" style="margin-top:15px;padding:15px;">
+                <div class="col-lg-4">
+                    <h5>Members (@Model.Team.HackathonMembers.Count / 5):</h5>
+                    <ul class="list-group dl-horizontal" style="border: none; margin-left: -10px;margin-top: 5px;">
+                        @foreach (var member in Model.Team.HackathonMembers)
+                        {
+                            <li style="border:none" class="list-group-item">
+                                <img src="@member.ProfileImage" class="img-circle" height="32" width="32" />
+                                @if (member.UserId == Model.CurrentUser.Id)
+                                {
+                                    <text>(You)</text>
+                                }
+                                else
+                                {
+                                    <text> &nbsp; <strong>@member.DisplayName</strong> </text>
+                                }
+                            </li>
+                        }
+                    </ul>
+                </div>
+                <div class="col-lg-8">
+                    <h5>Open positions in this team:</h5>
+                    @if (Model.Team.HackathonTeamOfferings == null || (Model.Team.HackathonTeamOfferings != null && Model.Team.HackathonTeamOfferings.Count == 0))
+                    {
+                        <p>The team does not have any open spots</p>
+                    }
+                    else
+                    {
+                        <ul class="list-group" style="margin-left: -15px; margin-top: 5px;">
+                            @if(Model.Team.HackathonTeamOfferings != null) { 
+                            foreach (var opening in Model.Team.HackathonTeamOfferings)
+                            {
+                                <li>
+                                    <div class="col-md-6">
+                                        @if (opening.Text.Length > 80)
+                                        {
+                                            opening.Text = opening.Text.Substring(0, 80);
+                                        }
+                                        <strong>@opening.Title</strong><br/>@opening.Text<br/>
+                                        @if (!Model.HasTeam && !Model.Hackathon.VotingIsActive) { 
+                                            <a style="color: white" href="/viewteams/joinPosition?id=@Model.Team.Id&posid=@opening.Id" id="cmdLeave" class="btn btn btn-xs btn-success"><i class="glyphicon glyphicon-plus"></i> Take this position</a>
+                                        }
+                                    </div>
+                                </li>
+                                }
+                            }
+                        </ul>
+                    }
+                </div>
+            </div>
+            <div class="modal-footer">
+                @if (!Model.HasTeam && (Model.Team.HackathonTeamOfferings != null && Model.Team.HackathonTeamOfferings.Count == 0) && !Model.Hackathon.VotingIsActive)
+                {
+                    <a style="color: white" href="/viewteams/join?id=@Model.Team.Id" id="cmdLeave" class="btn btn btn-xs btn-success"><i class="glyphicon glyphicon-plus"></i>Join Team</a>
+                }
+            </div>
+
+
+        </div>
+    </div>
+</div>
+

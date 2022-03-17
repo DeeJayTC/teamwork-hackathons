@@ -1,0 +1,19 @@
+@model Teamwork_Hackathon.Models.DTO.HackathonTeamDto
+@inject UserManager<ApplicationUser> UserManager
+@{
+  ViewData["Title"] = "Team Details";
+}
+
+
+@{
+    if (Model.UserTeam?.Id != Model.Team.Id)
+    {
+        Layout = null;
+        Html.RenderPartial("DetailsModal", Model);
+    }
+    else
+    {
+        Html.RenderPartial("DetailsUser", Model);
+    }
+
+}

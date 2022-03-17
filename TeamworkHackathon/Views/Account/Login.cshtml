@@ -1,0 +1,147 @@
+@using System.Collections.Generic
+@using System.Linq
+@using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.Http.Authentication
+@model LoginViewModel
+@inject SignInManager<ApplicationUser> SignInManager
+
+@{
+    ViewData["Title"] = "Log in";
+}
+
+<div class="container">
+    <div class="row" style="margin-top:20px">
+            <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
+            <h2><img src="~/dist/twhackgif.gif" style="height:140px;position:relative;left:-80px;" /></h2>
+            </div>
+            <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3 text-center" style="margin-top:30px;">
+
+                @{
+                  var loginProviders = (await SignInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+                  if (loginProviders.Count == 0)
+                  {
+                    <div>
+                        <p>
+                            There are no external authentication services configured. See <a href="https://go.microsoft.com/fwlink/?LinkID=532715">this article</a>
+                            for details on setting up this ASP.NET application to support logging in via external services.
+                        </p>
+                    </div>
+                  }
+                  else
+                  {
+                    <form asp-action="ExternalLogin" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal">
+                        <div>
+                                @foreach (var provider in loginProviders)
+                                {
+                                    <button type="submit" class="btn btn-default" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">
+                                        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB8AAAAeCAYAAADU8sWcAAABS2lUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4KPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iQWRvYmUgWE1QIENvcmUgNS42LWMxMzggNzkuMTU5ODI0LCAyMDE2LzA5LzE0LTAxOjA5OjAxICAgICAgICAiPgogPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KICA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIi8+CiA8L3JkZjpSREY+CjwveDp4bXBtZXRhPgo8P3hwYWNrZXQgZW5kPSJyIj8+IEmuOgAABDRJREFUSImtl1tMXFUUhr9z5gaDIDN0uDXa1BY1aWC4Cmq1kT5A01hf1GiqTbRtjDHxwfhgYnwQLMSYaIqFpkYSUhtviQ9qWlMKptEqtvSSNiS0AWyVOwNMh8IMzO34sJnDAWYPF/mTk5yz19rr//fl7L2WMvr0g6wSjwHVQBmwHXACKjAJ3AFuAK3Ar0BEFsRDGv04AVBWILcCB4F35glXgyHgOPA54IvncBsXXlJQEwTZBXQBTWsgBsgFaoGbwEtGQwSVv8nESwqAlPx9oB3IWwPpUmQD3wBfApZpbHSTy13suoM6Vzm7tNNR4CPA9D+IdWhwYIT0J3vIJoh5kU117hwjuFsX8B7w9kaQAoQw+3vIfm6I9PMayjK7Mt0mXib/yHzG1p50jsQj/gs4BVwA/p33zQGKEetbBYLFh937D5v2hlE7ZMFi5EnAjck/M/NsbUnx/IaBQ8CZRCMFyqIoLYM40z2kViE2rBSxRXgdyHM+MYZXcWE9l2z0uQbsAwZWIGYWS+dtXBUBrA7EzCSEMt2GAvQA22KN3g5dwCBQBHhWCjROKgM4icZZWxnMQIWRGMDxuEfMQGvym/GIu7J2ctNVjiUyizkaxEsKs5oZW2hmIXBkFlM0DIAajWAJB3SbNexH0aKYEZtkGRwVnmteXD9bWxctAXNmO82l9fiSNq16hDKoQKnE9r2jwkOwKrCo8fQjh43EdwFtnc/9KvJTrB3AUb4gYMKew9m819Y8QhnMQJrEpu9uR7nYA99OvEvIZNsw8kQXi9X40ZLxEL9ndSJmbOPIpyS23NhLw0AJH6ft4NID40yF6zdMgIr4x+NhF0DDSDF1NrdOdzV3GG/kkw0RoAKXJbYXGycKOWIqXEZzPaefcT4FtHTEWS57vpPEbgF8KiL1WYZGn7uoJlr8rEx1V+YdRpWjJJgBN/CCxPYjiJF3AH1GS9N0PjXBEhDpkEsWvdvVx7CpMZ4AO3CS+BvaD5yNkWvAZzFLoz+fDwNlsc/N846bZQJuZdxiwHLcKCAV+AEokHRpBgIx8lhD7zF/PjUzZUudi4BLwB6ZgF5HN/3WE4BWgpjJaonrFFAf+9CTiWP+/MrambJWEicTHSwkE/3zvllACfDyVl9+1Za5wwrym+0N4ItF5A3+Ao7MlAJ8ANQkIF8RW+652Ro4SBwBXwEHjA2mlOfd1M3od8tvQAZQvl5yn22UiDaCI1SIsiDgDLAfQzFhioYxXdy3d2n/X4Ao4pBZfWZgwJR1hAhjOEJuFJRm4FUgZPR56voJ6dleC+wGetdDDjCQcmW0976T+zWih5YSbx+8QEHfTwkvlvPADuCtNYoYQuydRwftl7/uST2FRlQ3pk8PUnlF/Nnm+P11BBHlUhOiUNyDKBS3IQpFEwuF4lVEDrCoUBxK7kQDHr73CpZImOqLdVhDfgD+A4JGUrMDgqD3AAAAAElFTkSuQmCC" width="31" height="30" />
+                                          Login with Teamwork Google Account
+                                    </button>
+                                }
+                        </div>
+                    </form>
+                  }
+                }
+            </div>
+            <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3" style="display:none;">
+                <form asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
+                    <fieldset>
+                        <hr class="colorgraph">
+                        <div class="form-group">
+                            <label asp-for="Email"></label>
+                            <input asp-for="Email" class="form-control input-lg" placeholder="Email Address" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Password"></label>
+                            <input asp-for="Password" class="form-control input-lg" placeholder="Password">
+                            <span asp-validation-for="Password" class="text-danger"></span>
+
+                        </div>
+                        <div class="form-group">
+                            <div class="checkbox">
+                                <label asp-for="RememberMe">
+                                    <input asp-for="RememberMe" />
+                                    @Html.DisplayNameFor(m => m.RememberMe)
+                                </label>
+                            </div>
+                        </div>
+                        <hr class="colorgraph">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                <input type="submit" class="btn btn-lg btn-success btn-block" value="Sign In">
+                            </div>
+                        </div>
+
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+</div>
+
+
+
+<script type="text/javascript">
+    $(function(){
+    $('.button-checkbox').each(function(){
+		var $widget = $(this),
+			$button = $widget.find('button'),
+			$checkbox = $widget.find('input:checkbox'),
+			color = $button.data('color'),
+			settings = {
+					on: {
+						icon: 'glyphicon glyphicon-check'
+					},
+					off: {
+						icon: 'glyphicon glyphicon-unchecked'
+					}
+			};
+
+		$button.on('click', function () {
+			$checkbox.prop('checked', !$checkbox.is(':checked'));
+			$checkbox.triggerHandler('change');
+			updateDisplay();
+		});
+
+		$checkbox.on('change', function () {
+			updateDisplay();
+		});
+
+		function updateDisplay() {
+			var isChecked = $checkbox.is(':checked');
+			// Set the button's state
+			$button.data('state', (isChecked) ? "on" : "off");
+
+			// Set the button's icon
+			$button.find('.state-icon')
+				.removeClass()
+				.addClass('state-icon ' + settings[$button.data('state')].icon);
+
+			// Update the button's color
+			if (isChecked) {
+				$button
+					.removeClass('btn-default')
+					.addClass('btn-' + color + ' active');
+			}
+			else
+			{
+				$button
+					.removeClass('btn-' + color + ' active')
+					.addClass('btn-default');
+			}
+		}
+		function init() {
+			updateDisplay();
+			// Inject the icon if applicable
+			if ($button.find('.state-icon').length == 0) {
+				$button.prepend('<i class="state-icon ' + settings[$button.data('state')].icon + '"></i> ');
+			}
+		}
+		init();
+	});
+});
+</script>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

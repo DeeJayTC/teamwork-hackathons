@@ -1,0 +1,63 @@
+@model Teamwork_Hackathon.Models.HackathonTeam
+@{
+  Layout = null;
+}
+<div class="col-md-9 twibox col-lg-offset-2 modal-content">
+    <div class="modal-header">
+        <div class="col-lg-11">
+            <h4>Create a new Hackathon Team</h4>
+        </div>
+        <div class="col-lg-1">
+            <a href="#" id="btnClose" class="btnClose">X</a>
+        </div>
+
+    </div>
+    <div class="col-md-9 col-lg-offset-2" style="margin-top:15px;">
+        <form asp-action="Edit" id="createForm">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" name="HackathonId" value="1" />
+            <div class="form-group">
+                <label asp-for="TeamName" class="control-label"></label>
+                <input asp-for="TeamName" class="form-control" placeholder="Give your Team a name" />
+                <span asp-validation-for="TeamName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TeamDescription" class="control-label"></label>
+                <textarea id="TeamDescription" name="TeamDescription" value="@Model.TeamDescription" placeholder="Tell us something cool about your team (just write 'secret' if you don't want to)" class="form-control" rows="4" style="height:150px;">@Model.TeamDescription</textarea>
+                <span asp-validation-for="TeamDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Url" class="control-label"></label>
+                <input asp-for="Url" class="form-control" placeholder="Got a Project URL?" />
+                <span asp-validation-for="Url" class="text-danger"></span>
+            </div>
+        <div class="form-group">
+            <label asp-for="Logo" class="control-label"></label>
+            <input asp-for="Logo" class="form-control" placeholder="Any childish or whatever cool logo URL" />
+            <span asp-validation-for="Logo" class="text-danger"></span>
+        </div>
+            <div class="form-group">
+        <label asp-for="IsTechnical" class="control-label"></label>
+        <input asp-for="IsTechnical" class="form-control" placeholder="Is it a technical team?" />
+        <span asp-validation-for="IsTechnical" class="text-danger"></span>
+        </div>
+
+            <div class="form-group">
+                <input type="submit" id="btnSave" value="Save" class="btn btn-success" />
+                <input type="button" id="btnClose" value="Abort" class="btn btn-danger btnClose" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+    $(function () {
+        $('.btnClose').click(function () {
+            $('#myModal').modal('hide');
+        });
+    });
+</script>
+

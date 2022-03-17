@@ -1,0 +1,48 @@
+@model Teamwork_Hackathon.Models.DTO.VotingResultsDTO
+
+@{
+    ViewData["Title"] = "Voting Results";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row" style="position: relative; top: -30px;padding-left: 15px; padding-top: 15px; margin-top: -15px;background-color:white" >
+    <h4>Hackathon Results</h4>
+    <hr style="margin:15px;" />
+    <input type="button" class="btn btn-sm" value="Total Results" onclick="LoadTotals();" />
+    <input type="button" class="btn btn-sm" value="Results by Category" onclick="LoadCategory();" />
+    <input type="button" class="btn btn-sm" value="Total Results Non Tech" onclick="LoadTotalsNT();" />
+    <input type="button" class="btn btn-sm" value="Results by Category Non Tech" onclick="LoadCategoryNT();" />
+    <div class="col-lg-12" id="results"></div>
+
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        LoadTotals2();
+    });
+
+
+    function LoadTotalsNT() {
+        $('#results').load("/VotingOverview/ResultsTotalNonTech", function () {
+        });
+        return false;
+    }
+
+    function LoadCategoryNT() {
+        $('#results').load("/VotingOverview/ResultsByCategoryNonTech", function () {
+        });
+        return false;
+    }
+
+     function LoadTotals() {
+        $('#results').load("/VotingOverview/ResultsTotal", function () {
+        });
+        return false;
+    }
+
+    function LoadCategory() {
+        $('#results').load("/VotingOverview/ResultsByCategory", function () {
+        });
+        return false;
+    }
+</script>

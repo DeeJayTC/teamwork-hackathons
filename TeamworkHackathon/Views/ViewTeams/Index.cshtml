@@ -1,0 +1,100 @@
+@model Teamwork_Hackathon.Models.DTO.HackathonTeamListDto
+
+@{
+    ViewData["Title"] = "Hackathon Team Overview";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="row" style="padding-left: 15px; padding-top: -15px; margin-top: -15px;">
+    <h4>Hackathon Team Overview</h4>
+    <hr style="margin: 5px;" />
+
+    @foreach (var item in Model.Teams)
+    {
+        <div class="col-lg-3" style="height:380px;">
+            <div class="twibox">
+                <div class="twibox-title" style="height:75px;">
+                    <div class="row">
+                        <div class="col-lg-7 col-md-10 col-sm-10  col-xs-10"  style="text-align:left">
+                            <h5>@{
+                                var teamName = "";
+                                if (item.TeamName.Length > 100){
+                                    teamName = item.TeamName.Substring(0, 100);
+                                } else {
+                                    teamName = item.TeamName;
+                                }
+                            }
+
+                            @Html.DisplayFor(modelItem => item.TeamName)@if(item.IsUserTeam){<i>(Your Team)</i>}</h5>
+                        </div>
+                        <div class="col-lg-5 col-md-2 col-sm-2  col-xs-2">
+                            <div class="twibox-tools">
+                                <span class="badge badge-success"><i class="glyphicon glyphicon-user"></i>&nbsp;@Html.Raw(item.HackathonMembers.Count + " / 5")</span>
+                                @if (item.IsUserTeam)
+                                {
+                                    <a asp-action="Details" class="btn btn-xs btn-success" asp-route-id="@item.Id" asp-area=""><i class="glyphicon glyphicon-exclamation-sign"></i> Visit</a>
+                                }
+                                else
+                                {
+                                <a asp-action="Details" class="btn btn-xs btn-success" data-modal="" asp-route-id="@item.Id" asp-area=""><i class="glyphicon glyphicon-exclamation-sign"></i> Show</a>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="twibox-content" style="height:250px;">
+                    <div class="row">
+                        <div class="col-lg-4 col-sm-2 col-xs-2">
+                            <img src="@item.Logo" class="img-responsive" style="max-height:100px; max-width:100px" />
+                        </div>
+                        <div class="col-lg-8 col-sm-10 col-xs-10" style="min-height:100px;max-height:100px;min-height:100px">
+                            @{
+                              if (item.TeamDescription.Length > 100)
+                              {
+                                @Html.Raw(item.TeamDescription.Substring(0, 100));
+                              }
+                              else
+                              {
+                                @Html.Raw(item.TeamDescription);
+                              }
+
+                            }
+                        </div>
+                        <div class="col-lg-12 col-xs-12 col-md-12" style="margin-top:15px;height:50px;">
+                            <hr style="margin:2px;padding:2px;" />
+                            <ul class="list-group list-inline">
+                                @foreach (var member in item.HackathonMembers)
+                                {
+                                   <li data-toggle="tooltip" data-placement="top" title="@member.DisplayName"><img class="img-circle" src="@member.ProfileImage" width="30" height="30" /></li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row equal">
+                        <div class="col-lg-12 b-r" style="margin-top:15px;">
+                            @{
+                                if (item.HackathonTeamOfferings.Count > 0)
+                              {
+                                <span class="badge badge-success" style="background-color:orange">Looking for Members</span>
+                              }
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    }
+
+    
+
+</div>
+
+
+<script type="text/javascript">
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();
+});
+</script>

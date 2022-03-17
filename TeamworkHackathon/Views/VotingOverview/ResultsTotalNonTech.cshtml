@@ -1,0 +1,37 @@
+@model Teamwork_Hackathon.Models.DTO.VotingResultsDTO
+
+
+ @{
+     int i = 0;
+ }
+<div class="row">
+    <div class="col-lg-12" style="padding-bottom: 15px; margin-top: 25px;">
+        <ul>
+            @foreach (var result in Model.TotalResultsNonTech.Take(5))
+            {
+                <li>
+                    @if (i == 0)
+                    {
+                        <h2><i  style="color:yellow" class="glyphicon glyphicon-star"></i><i  style="color:yellow" class="glyphicon glyphicon-star"></i><i  style="color:yellow" class="glyphicon glyphicon-star"></i>@result.TeamName - @result.Score</h2>
+                    }
+                    else if (i == 1)
+                    {
+                        <h3><i  style="color:yellow" class="glyphicon glyphicon-star"></i><i  style="color:yellow" class="glyphicon glyphicon-star"></i>@result.TeamName - @result.Score</h3>
+                    }
+                    else if (i == 2)
+                    {
+                        <h4><i  style="color:yellow" class="glyphicon glyphicon-star"></i>@result.TeamName - @result.Score</h4>
+                    }
+                    else
+                    {
+                        <h5>@result.TeamName - @result.Score</h5>
+                    }
+                </li>
+                i++;
+            }
+        </ul>
+
+
+
+    </div>
+</div>

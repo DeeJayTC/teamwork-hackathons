@@ -1,0 +1,59 @@
+@model Teamwork_Hackathon.Models.DTO.HackathonPeopleSearchDto
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.AspNetCore.Mvc
+@using Microsoft.AspNetCore.Mvc.Rendering
+@using Microsoft.EntityFrameworkCore
+@using Teamwork_Hackathon.Models.DTO
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@if (User.Identity.IsAuthenticated)
+{
+
+    <div class="row twibox" style="margin-top:25px;padding:15px;">
+        <div class="col-lg-12 twibox-content">
+            @if (!Model.HasTeam && !Model.IsLookingForTeam)
+            {
+                <h4>@Html.ActionLink("Tell people you are looking for a team", "Create", "ViewMemberSearch", new { area = "" }, htmlAttributes: new { data_modal = "" })</h4>
+            }
+            @if (Model.IsLookingForTeam && !Model.HasTeam)
+            {
+                <h4>You are looking for a team, @Html.ActionLink("Update your Search Entry", "Edit", "ViewMemberSearch", new { area = "", ID = Model.SearchEntry.Id }, htmlAttributes: new { data_modal = "" })</h4>
+            }
+            <h5 style="margin-top:25px;">People looking for a team:</h5>
+        </div>
+        <div class="row">
+            
+            @if(!Model.People.Any())
+            {
+                <p>Currently there is noone looking for a Team!</p>
+            }
+            else
+            {
+                foreach (var item in Model.People)
+                {
+                    <div class="col-lg-3" style="max-height:250px;">
+                        <div class="twibox">
+                            <div class="twibox-title" style="height:100px;">
+                                <div class="col-lg-3">
+                                    <img class="img-circle" src="@item.User.ProfileImage" />
+                                </div>
+                                <div class="col-lg-9" style="padding-top:5px;">
+                                    <span style="font-size:14px;font-weight:500">@item.User.FirstName @item.User.LastName</span>
+                                    <p>@item.User.Email</p>
+                                </div>
+                            </div>
+                            <div class="twibox-content">
+                                <p><i style="font-weight:bold">@item.Title</i></p>
+                                <p>@item.Text</p>
+                                @if (Model.HasTeam && Model.UserTeam.HackathonMembers.Count < 5)
+                                {
+                                    <a href="/viewteams/recruit?id=@item.Id&teamid=@Model.UserTeam.Id" style="margin-top:15px;color:white;" onclick="lala" class="btn btn-xs btn-success"><i class="glyphicon glyphicon-plus"></i>&nbsp;Recruit this person </a>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+}

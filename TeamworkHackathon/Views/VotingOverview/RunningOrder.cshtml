@@ -1,0 +1,44 @@
+@model Teamwork_Hackathon.Models.DTO.VotingDTO
+<h4 style="margin-bottom: 15px;">Running Order:</h4>
+<p></p>
+<ul class="list-group">
+    @{
+        int counter = 1;
+    }
+    @foreach (var team in Model.Teams.OrderBy(p => p.SortKey))
+            {
+        <li style="padding-bottom: 5px;">
+            @if (Model.UserTeam?.Id == team.ID)
+            {
+               <h5><i class="glyphicon glyphicon-user"></i>@counter. @team.TeamName</h5>
+            }
+            else
+            {
+                string css = "btn btn-xs btn-info";
+                if (team.HasVoted)
+                {
+                    css = "btn btn-xs btn-success";
+                }
+                <a asp-action="VotesPerTeam" class="@css" data-select="" asp-route-id="@team.ID" asp-area="" asp-controller="VotingOverview" asp-fragment="teamid=@team.ID"><h5>@counter. @team.TeamName
+                           @if (team.HasVoted)
+                           {
+                               <i class="glyphicon glyphicon-check"></i>
+                           }
+                           </h5></a>
+            }
+        </li>
+        counter++;
+    }
+    <p style="font-style: italic;font-size:9px">Presentations will take approx @Html.Raw(counter * 3) minutes (3 min per team)</p>
+</ul>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("a[data-select]").on("click", function (e) {
+            $('#votingPanel').load(this.href, function () {
+            });
+            return false;
+        });
+    });
+</script>

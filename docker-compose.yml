@@ -1,0 +1,14 @@
+version: '3.4'
+
+services:
+  teamworkhackathon:
+    image: TeamworkHackathon
+    build:
+      context: .
+      dockerfile: TeamworkHackathon/Dockerfile
+    ports:
+      - "12791:12791"
+networks:
+  default:
+    external:
+      name: dev-env-docker_default

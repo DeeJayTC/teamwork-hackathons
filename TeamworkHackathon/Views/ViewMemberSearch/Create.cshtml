@@ -1,0 +1,47 @@
+@model Teamwork_Hackathon.Models.HackathonSearchMembers
+@{
+  ViewData["Title"] = "Create";
+  Layout = null;
+}
+<div class="col-md-9 twibox col-lg-offset-2 modal-content">
+    <div class="modal-header">
+        <div class="col-lg-11">
+            <h5>Tell other people you are looking for a team!</h5>
+        </div>
+        <div class="col-lg-1">
+            <a href="#" id="btnClose" class="btnClose">X</a>
+        </div>
+
+    </div>
+    <div class="col-md-9 col-lg-offset-2" style="margin-top:15px;">
+        <form asp-action="Create" id="createForm">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" value="@ViewBag.UserId" name="UserId" />
+            <div class="form-group">
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" id="Title" class="form-control" placeholder="Give us a short title" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Text" class="control-label"></label>
+                <textarea style="height:100px" class="form-control" name="Text" placeholder="Tell us what you can ofer"></textarea>
+                <span asp-validation-for="Text" id="Text" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="button" id="btnClose" value="Abort" class="btn btn-danger btnClose" />
+            </div>
+        </form>
+
+    </div>
+  @section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+<script type="text/javascript">
+
+    $(function () {
+        $('.btnClose').click(function () {
+            $('#myModal').modal('hide');
+        });
+    });
+</script>

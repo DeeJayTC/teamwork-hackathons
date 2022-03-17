@@ -1,0 +1,28 @@
+@model Teamwork_Hackathon.Models.DTO.VotingDTO
+
+@{
+    ViewData["Title"] = "Voting Overview";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row" style="position: relative; top: -30px;padding-left: 15px; padding-top: 15px; margin-top: -15px;background-color:white" >
+    <h4>Hackathon Team Overview</h4>
+    <hr style="margin:15px;" />
+
+    <div class="col-lg-4">
+
+        @Html.Partial("RunningOrder", Model)
+    </div>
+    <div class="col-lg-8">
+        <h4>Voting</h4>
+        <br/>
+        <div id="votingPanel"><p>Select a team from the list to vote for:</p></div>
+    </div>
+
+</div>
+
+
+<script type="text/javascript">
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();
+});
+</script>
