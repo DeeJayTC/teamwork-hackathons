@@ -322,7 +322,7 @@ namespace Teamwork_Hackathon.Controllers
                 try
                 {
 
-                    string googleApiKey = "AIzaSyDveA2a64suhRbk3mK7pEfql_Le0oCtCzI";
+                    string googleApiKey = "";
                     string nameIdentifier = info.Principal.FindFirstValue(ClaimTypes.NameIdentifier);
                     string jsonUrl = $"https://content-people.googleapis.com/v1/people/{nameIdentifier}?personFields=photos&key={googleApiKey}";
                     using (HttpClient httpClient = new HttpClient())
